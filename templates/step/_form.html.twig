@@ -1,0 +1,38 @@
+{{ form_start(form) }}
+
+<div class="row form-group panel panel-heading">
+    <div class="row col-md-12">
+        <div  class="col-md-1 label rightAlign">
+            {{ form_label(form.number) }}
+        </div>
+        <div  class="col-md-1">
+            {{ form_errors(form.number) }}
+            {{ form_help(form.number) }}
+            {{ form_widget(form.number) }}
+        </div>
+        <div  class="col-md-1 label rightAlign">
+            {{ form_label(form.name) }}
+        </div>
+        <div  class="col-md-3">
+            {{ form_errors(form.name) }}
+            {{ form_help(form.name) }}
+            {{ form_widget(form.name) }}
+        </div>
+        <div  class="col-md-1 label rightAlign" {{ nonDisplay ? 'style="display:none"' }}>
+            {{ form_label(form.stepDefault) }}
+        </div>
+        <div  class="col-md-1" {{ nonDisplay ? 'hidden' }}>
+            {{ form_errors(form.stepDefault) }}
+            {{ form_help(form.stepDefault) }}
+            {{ form_widget(form.stepDefault) }}
+        </div>
+    </div>
+</div>
+
+{{ include('errors/errors.html.twig') }}
+
+<div id="actions" class="row">
+    <div  class="col-md-2">
+        <button type="submit" class="btn  btn-block btn-sm btn-success">Enregistrer</button>
+    </div>
+{{ form_end(form) }}

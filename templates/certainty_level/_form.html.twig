@@ -1,0 +1,28 @@
+{{ form_start(form) }}
+
+<div class="row form-group panel panel-heading">
+    <div class="row col-md-12">
+        <div  class="row col-md-1 label">
+            {{ form_label(form.name) }}
+        </div>
+        <div  class="col-md-3">
+            {{ form_errors(form.name) }}
+            {{ form_help(form.name) }}
+            {{ form_widget(form.name) }}
+        </div>
+        <div  class="col-md-1 col-md-offset-1 label">
+            {{ form_label(form.rate) }}
+        </div>
+        <div  class="col-md-1">
+            {{ form_errors(form.rate) }}
+            {{ form_help(form.rate) }}
+            {{ form_widget(form.rate) }}
+        </div>
+    </div>
+</div>
+<div id="actions" class="row">
+    <div  class="col-md-2">
+        <button type="submit" class="btn  btn-block btn-sm btn-success">Enregistrer</button>
+    </div>
+    {{ form_errors(form) }}
+{{ form_end(form) }}

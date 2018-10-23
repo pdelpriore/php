@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ titleHeader }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="col-md-12 text-center">
+            <h2>Devis {{ header.title }}{% if header.estimateVersion != "1" %}&nbsp;(V{{ header.estimateVersion }}){%  endif %}&nbsp;-&nbsp;{{ statusName[status] }}</h2>
+        </div>
+
+        <div class="col-md-12 form-group">
+            {{ include('header/_form.html.twig', {'attr': { 'id': 'formHeader'}}) }}
+            {% if status == 7 %}
+                <div class="col-md-2">
+                    {{ include('header/bill.html.twig') }}
+                </div>
+            {% endif %}
+            {% if status == 5 %}
+                <div class="col-md-2">
+                    {{ include('header/deliver.html.twig') }}
+                </div>
+            {% endif %}
+            {% if status == 4 %}
+                <div class="col-md-2">
+                    <a href="{{ path('header_accept', {'id': header.id}) }}" class="btn btn-block btn-sm btn-primary">Accepter</a>
+                </div>
+                <div class="col-md-2">
+                    {{ include('header/refuse.html.twig') }}
+                </div>
+                <div class="col-md-2">
+                    {{ include('header/version.html.twig') }}
+                </div>
+            {% endif %}
+            {% if status == 2 %}
+                {#<div class="col-md-2">#}
+                    {#{{ include('header/send.html.twig') }}#}
+                {#</div>#}
+                <div class="col-md-2">
+                <a id="envoyerDevis" target="_blank" href="{{ path('header_send', {'id': header.id}) }}" class="btn btn-block btn-sm btn-primary">Envoyer Devis</a>
+                </div>
+            {% endif %}
+            {% if status == 2 %}
+                <div class="col-md-2">
+                    {{ include('header/_delete_form.html.twig') }}
+                </div>
+            {% endif %}
+            {% if status == 3 %}
+                <div class="col-md-2">
+                    {{ include('header/reactivate.html.twig') }}
+                </div>
+            {% endif %}
+
+            {% if status in [1, 2, 3, 4, 5, 6, 7, 8] %}
+                <div class="col-md-2">
+                    <a href="{{ path('index', {'step': status}) }}" class="btn btn-block btn-sm btn-default">Retour</a>
+                </div>
+            {% endif %}
+            {% if status in [2, 3, 4, 5, 6, 7, 8] %}
+                <div class="col-md-2">
+                    <a href="{{ path('header_show', {'id': header.id}) }}"
+                       class="btn btn-block btn-sm btn-grey">Aperçu</a>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}

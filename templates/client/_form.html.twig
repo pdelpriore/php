@@ -1,0 +1,184 @@
+{{ form_start(form) }}
+
+<div class="row form-group panel panel-heading">
+    <div class="row">
+        <div class="col-md-1 label">
+            {{ form_label(form.name) }}
+        </div>
+        <div class="col-md-2">
+            {{ form_errors(form.name) }}
+            {{ form_help(form.name) }}
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="col-md-1 label rightAlign">
+            {{ form_label(form.alias) }}
+        </div>
+        <div class="col-md-2">
+            {{ form_errors(form.alias) }}
+            {{ form_help(form.alias) }}
+            {{ form_widget(form.alias) }}
+            {{ form_widget(form.alias) }}
+        </div>
+
+        <div class="col-md-1 label rightAlign">
+            {{ form_label(form.logo) }}
+        </div>
+        <div class="col-md-2">
+            {{ form_errors(form.logo) }}
+            {{ form_help(form.logo) }}
+            {{ form_widget(form.logo) }}
+        </div>
+        <div class="col-md-2">
+            {% if client.logo is not empty %}
+                <img class="logoForm" src="{{ asset('images/logos/' ~ client.logo) }}">
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1 label rightAlign">
+            {{ form_label(form.dayly_cost) }}
+        </div>
+        <div class="col-md-1">
+            {{ form_errors(form.dayly_cost) }}
+            {{ form_help(form.dayly_cost) }}
+            {{ form_widget(form.dayly_cost) }}
+        </div>
+    </div>
+</div>
+
+{{ include('errors/errors.html.twig') }}
+
+<div class="row form-group panel panel-body">
+    <div class="row">
+        <ul id="nav_ul" class="nav nav-tabs">
+            <li id="nav_inchargepersons" class="col-md-3">
+                <a class="tabs label" onclick="showHide($(this));">INTERLOCUTEURS</a>
+            </li>
+            <li id="nav_applications" class="col-md-3">
+                <a class="tabs label" onclick="showHide($(this));">APPLICATIONS</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-12">
+        <ul id="ul_inchargepersons" class="row col-md-12 collapse in embeddedForm showhide"
+            data-prototype="{{ form_widget(form.in_charge_persons.vars.prototype)|e() }}">
+            <li class="row entete undeletable">
+                <div class=" col-md-2">
+                    <div class="btn btn-block btn-sm btn-success" onclick="line('inchargepersons')">
+                        Nouvel interlocuteur
+                    </div>
+                </div>
+            </li>
+            <li class="row entete undeletable">
+                <div class="col-md-2">Prénom</div>
+                <div class="col-md-2">Nom</div>
+                <div class="col-md-3">Département</div>
+            </li>
+            <div id="inchargepersons">
+                {% set index = 0 %}
+                {% for in_charge_person in form.in_charge_persons %}
+                    {% set index = index + 1 %}
+                    <li id="{{ index }}" class="row col-md-12 undeletable">
+                        {% if in_charge_person.vars.value.getId is not null %}
+                        <div><a class="col-md-1 glyphicon glyphicon-eye-open"
+                                title="... suit quelle(s) application(s) ?"
+                                href="{{ path('in_charge_person_edit', {'id': in_charge_person.vars.value.getId}) }}"></a>
+                        </div>
+                        {% endif %}
+                        <div>{{ form_row(in_charge_person.firstName, {'label' : false}) }}</div>
+                        <div>{{ form_row(in_charge_person.lastName, {'label' : false}) }}</div>
+                        <div>{{ form_row(in_charge_person.department, {'label' : false}) }}</div>
+                        {% if in_charge_person.vars.value.getId not in undeletablePeople %}
+                            <div class="col-md-1" style="margin-top: -0.1em;">
+                                <a href="#"
+                                   class="glyphicon glyphicon-minus"
+                                   title="NE PAS OUBLIER d'enregistrer après suppression d'une ligne"
+                                   onclick="removeLine({{ index }});"></a>
+                            </div>
+                        {% endif %}
+                    </li>
+                {% else %}
+                    <li class="empty col-md-12 undeletable">
+                        <div class="text-center msg-empty">
+                            Aucun interlocuteur n'a été défini
+                        </div>
+                    </li>
+                {% endfor %}
+            </div>
+        </ul>
+        <ul id="ul_applications" class="collapse in embeddedForm showhide"
+            data-prototype="{{ form_widget(form.applications.vars.prototype)|e() }}">
+            <li class="row entete undeletable">
+                <div class="row col-md-2">
+                    <div class="btn btn-block btn-sm btn-success" onclick="line('applications')">
+                        Nouvelle application
+                    </div>
+                </div>
+            </li>
+            <li class="row entete undeletable">
+                <div class="col-md-2">Nom</div>
+                <div class="col-md-1">Alias</div>
+                <div class="col-md-1">Id dans RD</div>
+            </li>
+            <div id="applications">
+
+
+                {% set causes = [] %}
+                {% set errorsApp = false %}
+                {% for error in (form.vars.errors) %}
+                    {% for cause in error.cause.cause %}
+                        {% if cause.alias not in causes %}
+                        {% set causes = causes|merge([cause.alias]) %}
+                        {% endif %}
+                        {% set errorsApp = true %}
+                    {% endfor %}
+                {% endfor %}
+
+                {% set index = 0 %}
+                {% for application in form.applications %}
+                    {% set index = index + 1 %}
+
+                    <li id="{{ index }}" class="row undeletable">
+                        {% set errorAlias = application.alias.vars.errors|length > 0 %}
+                        {% if application.vars.value.getId is not null %}
+                            <div><a class="col-md-1 glyphicon glyphicon-user"
+                                    title="... est suivie par quel(s) interlocuteur(s) ?"
+                                    href="{{ path('application_edit', {'id': application.vars.value.getId}) }}"></a>
+                            </div>
+                        {% endif %}
+                        <div>{{ form_row(application.name, {'label' : false}) }}</div>
+                        <div {% if application.vars.value.alias in causes %}class="errors"{% endif %}>{{ form_widget(application.alias, {'label' : false}) }}</div>
+                        <div>{{ form_row(application.RD_ref, {'label' : false}) }}</div>
+                        {% if application.vars.value.getId not in undeletableApplications %}
+                            <div class="col-md-1" style="margin-top: -0.1em;">
+                                <a href="#"
+                                   class="glyphicon glyphicon-minus"
+                                   title="NE PAS OUBLIER d'enregistrer après suppression d'une ligne"
+                                   onclick="removeLine({{ index }});"></a>
+                            </div>
+                        {% endif %}
+                    </li>
+                {% else %}
+                    <li class="empty col-md-12 undeletable">
+                        <div class="text-center msg-empty">
+                            Aucune application n'a été définie
+                        </div>
+                    </li>
+                {% endfor %}
+            </div>
+        </ul>
+    </div>
+</div>
+
+{% if errorsApp is defined and errorsApp %}
+    <script type="text/javascript">
+        var TRIGER_APP = true
+    </script>
+{% endif %}
+
+<div id="actions" class="row">
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-block btn-sm btn-success">Enregistrer</button>
+    </div>
+{{ form_end(form) }}

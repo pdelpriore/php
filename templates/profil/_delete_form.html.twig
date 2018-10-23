@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('profil_delete', {'id': profil.id}) }}" onsubmit="return confirm('Merci de confirmer la suppression du profil {{ profil.name }}.');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ profil.id) }}">
+    <button class="btn btn-block btn-sm btn-danger">Supprimer</button>
+</form>

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ titleConfiguration }}{% endblock %}
+
+{% block body %}
+    <div class="container panel-group">
+        <div class="row col-md-12panel panel-heading">
+            <div class="row col-md-12 text-center">
+                <h2 class="">{{ titleActivityGroup }}</h2>
+            </div>
+            <div class="row col-md-2">
+                <a href="{{ path('activity_group_new') }}" class="btn btn-block btn-sm btn-success">Ajouter un groupe</a>
+            </div>
+        </div>
+        <div class="row col-md-12 panel panel-body">
+            <table id = "headerList" class="table table-striped table-hover table-condensed">
+                <thead>
+                <tr>
+                    <th>N° d'ordre</th>
+                    <th>Nom</th>
+                    <th>Part du projet</th>
+                    <th>Groupe référent ?</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for activity_group in activity_groups%}
+                    <tr>
+                        <td><a href="{{ path('activity_group_edit', {'id': activity_group.id}) }}">{{ activity_group.serialNumber}}</a></td>
+                        <td><a href="{{ path('activity_group_edit', {'id': activity_group.id}) }}">{{ activity_group.name}}</a></td>
+                        <td><a href="{{ path('activity_group_edit', {'id': activity_group.id}) }}">{{ activity_group.rate|number_format(2, ',', '.') }} %</a></td>
+                        <td><a href="{{ path('activity_group_edit', {'id': activity_group.id}) }}">{{ activity_group.referent ?'OUI' :''}}</a></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">Aucun groupe défini</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

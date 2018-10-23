@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('billing_delete', {'id': billing.id}) }}" onsubmit="return confirm('Merci de confirmer la suppression du type de facturation {{ billing.name }}.');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ billing.id) }}">
+    <button class="btn btn-block btn-sm btn-danger">Supprimer</button>
+</form>

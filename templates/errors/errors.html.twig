@@ -1,0 +1,9 @@
+{% if errorsForms is defined and errorsForms is not empty %}
+    <ul class="alert alert-danger">
+        {% for errorForm in errorsForms %}
+            <li class="alert-danger">
+                {{ errorForm.message }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

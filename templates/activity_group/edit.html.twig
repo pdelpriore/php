@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ titleConfiguration }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <div class="col-md-12 text-center">
+        <h2>{{ activity_group.name }}</h2>
+    </div>
+
+    <div class="form-group">
+        {{ include('activity_group/_form.html.twig') }}
+
+            <div class=" col-md-2">
+                <a href="{{ path('activity_group_index') }}" class="btn btn-block btn-sm btn-default">Retour</a>
+            </div>
+        {% if not undeletableActivityGroup %}
+            <div class="col-md-2">
+                {{ include('activity_group/_delete_form.html.twig') }}
+            </div>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}

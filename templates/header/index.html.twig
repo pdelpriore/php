@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ titleHeader }}{% endblock %}
+
+{% block body %}
+    <div class="container panel-group">
+        <div class="row col-md-12panel panel-heading">
+            <div class="row col-md-12 text-center">
+                <h2 class="">{{ titleEstimateIndex }}</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <a href="{{ path('header_new') }}" class="btn btn-block btn-sm btn-success">Créer un devis</a>
+                </div>
+                <form action="" method="post">
+                    <div class="col-md-8">
+                        <div class="col-md-5 col-md-offset-3">
+                            <label>
+                                Facturation
+                                <select name="billingSelected" class="input-sm"
+                                        onclick="$('#submitFilters').removeAttr('disabled');">
+                                    <option value="0">Tous</option>
+                                    {% for billing in filters['billings'] %}
+                                        <option {% if filters['billingSelected'] is defined and billing.id == filters['billingSelected'] %}selected{% endif %}
+                                                value="{{ billing.id }}">{{ billing.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <label>
+                                Statut
+                                <select name="stepSelected" class="input-sm"
+                                        onclick="$('#submitFilters').removeAttr('disabled');">
+                                    <option value="0">Tous</option>
+                                    {% for step in filters['steps'] %}
+                                        <option {% if filters['stepSelected'] is defined and step.id == filters['stepSelected'] %}selected{% endif %}
+                                                value="{{ step.number }}">{{ step.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input id="submitFilters" type="submit" class="col-md-12 btn btn-block btn-sm btn-info"
+                               value="Filtrer"
+                               disabled="disabled">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row panel panel-body">
+            <table id="headerList" class="table table-striped table-hover table-condensed">
+                <thead>
+                <tr>
+                    <th>Référence</th>
+                    <th>Application</th>
+                    <th>Objet</th>
+                    <th>Qtés</th>
+                    <th>Prix HT</th>
+                    <th>Chiffreur</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for header in headers %}
+                    <input id="indexId" type="text" value="{{ header[9] }}" style="display: none;">
+                    <tr id="{{ header[0] }}">
+                        <td class="header title">
+                            <a href="{{ path('header_edit', {'id': header[0]}) }}"
+                                     class="{{ 'index' ~ header[9] }} ">{{ header[1] }}</a></td>
+                        <td class="header application"><a href="{{ path('header_edit', {'id': header[0]}) }}"
+                                                          class="{{ 'index' ~ header[9] }} ">{{ header[2] }}</a></td>
+                        <td class="header description"><a href="{{ path('header_edit', {'id': header[0]}) }}"
+                                                          class="{{ 'index' ~ header[9] }} ">{{ header[3] }}</a></td>
+                        <td class="header totalDays rightAlign"><a href="{{ path('header_edit', {'id': header[0]}) }}"
+                                                                   class="{{ 'index' ~ header[9] }} ">{{ header[4]|number_format(2, ',', '.') }}</a>
+                        </td>
+                        <td class="header totalPrice rightAlign"><a href="{{ path('header_edit', {'id': header[0]}) }}"
+                                                                    class="{{ 'index' ~ header[9] }} ">{{ header[5]|number_format(2, ',', '.') }}
+                                €</a></td>
+                        <td class="header personName"><a href="{{ path('header_edit', {'id': header[0]}) }}"
+                                                         class="{{ 'index' ~ header[9] }} ">{{ header[7] }}</a></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3" class="text-center msg-empty">Aucun devis n'a été trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ titleHeader }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <div class="row col-md-12 text-center panel">
+        <h2>Nouveau Devis</h2>
+    </div>
+
+    <div class="row col-md-12 form-group">
+    {{ include('header/_form.html.twig') }}
+
+            <div class="col-md-3 col-md-2">
+                <a href="{{ path('header_index') }}" class="btn btn-block btn-sm btn-info">Retour</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

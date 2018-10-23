@@ -1,0 +1,153 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ header.title }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {#<div class="row col-md-10 col-md-offset-1">#}
+        {#<div id="estimate" class="row col-md-10 col-md-offset-1">#}
+        <div id="estimate" class="row col-md-12">
+            <ul class=" embeddedForm" data-prototype="{{ form_widget(form.details.vars.prototype)|e() }}">
+                <div class="row showHeader1">
+                    <li class="undeletable ">
+                        <div class="col-md-12 showHeader1 centerAlign">
+                            {{ header.application.getClient.getName ~ " - " ~ header.application.getName }} / Réf.
+                            : {{ header.title ~" (V" ~header.estimateVersion ~ ")" }}
+                        </div>
+                    </li>
+                </div>
+                <div class="row showHeader2">
+                    <li class="undeletable col-md-12">
+                        <div class="col-md-8 showHeader2">
+                            <div class="col-md-12 contentHeader2">{{ header.description }}</div>
+                        </div>
+                        <div class="col-md-4 contentHeader2">
+                            <div class="col-md-3 contentHeader2 rightAlign">Qté</div>
+                            <div class="col-md-4 contentHeader2 rightAlign">PU HT</div>
+                            <div class="col-md-5 contentHeader2 rightAlign">Montant HT</div>
+                        </div>
+                    </li>
+                </div>
+                {% set total = 0 %}
+                {% set prix = 0 %}
+                {% for group in groups|sort %}
+
+                    {% set groupId = null %}
+                    {% set groupName = null %}
+                    {% set groupAutomatic = null %}
+                    {% set groupReferent = null %}
+                    {% set profilDefault = profilDefault %}
+                    {% for groupGlobal in groupsGlobal %}
+                        {% if groupGlobal.getSerialNumber == group %}
+                            {% set groupId = groupGlobal.getId %}
+                            {% set groupName = groupGlobal.getName %}
+                            {% set groupAutomatic = groupGlobal.getAutomatic %}
+                            {% set groupReferent = groupGlobal.getReferent %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% set groupTarget = groupName|replace({' ': '_'}) %}
+                    {% set groupTotal = 'Total ' ~ groupTarget %}
+                    {% set groupShowTotal = 'show' ~ groupTotal %}
+                    <div class="row showHeader3">
+                        <li class=" undeletable">
+                            <div class="col-md-12 contentHeader3">{{ groupName }}</div>
+                        </li>
+                    </div>
+                    <div id="{{ groupTarget }}" class="row">
+                        {% set subtotal = 0 %}
+                        {% set subprix = 0 %}
+                        {% set everLine = false %}
+
+                        {% for detail in form.details %}
+                            {% set dailyCost = detail.vars.value.profil is not null ? detail.vars.value.profil.getDaylyCost: 0 %}
+                            {% if detail.vars.value.activityGroup.getSerialNumber == group %}
+                                {% set everLine = not everLine %}
+                                <li class="undeletable col-md-12 showLi {{ (everLine) ? 'everLine' : 'oddLine' }}">
+                                    <div class="col-md-6">
+                                        <div class="col-md-12 showLi">{{ detail.vars.value.getDescription }}</div>
+                                    </div>
+                                    <div class="col-md-2 showLi">{{ (detail.vars.value.getProfil is null) ? '' : detail.vars.value.getProfil.getName }}</div>
+                                    <div class="col-md-4">
+                                        <div class="col-md-3 rightAlign showLi">{{ (detail.vars.value.getCalculatedDays == 0 or detail.vars.value.getCalculatedDays is null) ? '' : detail.vars.value.getCalculatedDays|number_format(2, ',', ' ') }}</div>
+                                        <div class="col-md-4 rightAlign showLi {% if detail.vars.value.getProfil is not null %}showDaylyCost{% endif %}">{{ (detail.vars.value.getDailyCost == 0 or detail.vars.value.getDailyCost is null) ? '' : detail.vars.value.getDailyCost|number_format(2, ',', ' ') }}</div>
+                                        {#<div class="col-md-4 rightAlign showLi {% if detail.vars.value.getProfil is not null %}showDaylyCost{% endif %}">{{ (detail.vars.value.getProfil is null) ? '' : ((detail.vars.value.getProfil.getDaylyCost == 0) ? '' :detail.vars.value.getProfil.getDaylyCost|number_format(2, ',', ' ')) }}</div>#}
+                                        <div class="col-md-5 rightAlign showLi {% if detail.vars.value.getPrice != 0 %}showPrice{% endif %}">{{ (detail.vars.value.getPrice == 0 or detail.vars.value.getPrice is null) ? '' : detail.vars.value.getPrice|number_format(2, ',', ' ') }}</div>
+                                    </div>
+
+                                    {% set subtotal = subtotal + detail.vars.value.calculatedDays %}
+                                    {% set subprix = subprix + detail.vars.value.price %}
+                                </li>
+                            {% endif %}
+                        {% else %}
+                            <li id="" class="empty col-md-12 undeletable">
+                                <div class="text-center msg-empty showLi">Aucune ligne na été saisie</div>
+                            </li>
+                        {% endfor %}
+                        {% set total = total + subtotal %}
+                        {% set prix = prix + subprix %}
+                        <div id="{{ groupTotal }}" class="row">
+                            <li class="undeletable col-md-12 totalLineMargin">
+                                <div class="col-md-6 ">
+                                    <div class="col-md-12 subTotalTitle showLi"></div>
+                                </div>
+                                <div class="col-md-2 subTotalTitle showLi">{{ groupName }}&nbsp;</div>
+                                <div class="col-md-4 totalLine subTotal">
+                                    <div class="subTotal">
+                                        <div class="col-md-3 totalDays rightAlign  showLi">{{ subtotal|number_format(2, ',', ' ') }}</div>
+                                        <div class="col-md-9 totalPrice rightAlign showLi">{{ subprix|number_format(2, ',', ' ') }}&nbsp;€</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div id="" class="row">
+                    <div id="" class="row">
+                        <li class="undeletable col-md-12 totalLineMargin">
+                            <div class="col-md-6">
+                                <div class="col-md-12 showLi grandTotalTitle"></div>
+                            </div>
+                            <div class="col-md-2 showLi grandTotalTitle">Total H.T.&nbsp;</div>
+                            <div class="col-md-4 totalLine grandTotal">
+                                <div class="grandTotal">
+                                    <div class="col-md-3 showLi grandTotalDays">{{ total|number_format(2, ',', ' ') }}</div>
+                                    <div class="col-md-9 showLi grandTotalPrice">{{ prix|number_format(2, ',', ' ') }} €</div>
+                                </div>
+                            </div>
+                        </li>
+                    </div>
+
+                    <div class="">
+                        <li class="undeletable ">
+                            <div class="col-md-12 showFooter centerAlign">
+                                Toute fonctionnalité imprécise dans le cahier des charges client
+                                <br>
+                                sera susceptible d'être revalorisée ultérieurement et pourra avoir un impact sur le
+                                planning.
+                            </div>
+                        </li>
+                    </div>
+            </ul>
+        </div>
+        <div class="col-md-12 col-md-offset-1">
+            <div class="col-md-2">
+                <div class="btn btn-block btn-sm btn-success"
+                     onclick="generateEstimate('{{ header.title }}', '{{ header.id }}')">Convertir en image
+                </div>
+            </div>
+            <div class="col-md-2">
+                <a href="{{ path('header_pdf', {'id': header.id}) }}" class="btn btn-block btn-primary">Devis en PDF</a>
+            </div>
+            <div class="col-md-2">
+                <a href="javascript:history.back()"
+                   class="btn btn-block btn-sm btn-default">Retour</a>
+                {#<a href="{{ path('header_edit', {'id': header.id}) }}"#}
+                   {#class="btn btn-block btn-sm btn-default">Retour</a>#}
+            </div>
+        </div>
+    </div>
+    {#</div>#}
+    {#<div id="previewImage" hidden></div>#}
+
+{% endblock %}

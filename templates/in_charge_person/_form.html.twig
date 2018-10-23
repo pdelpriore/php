@@ -1,0 +1,97 @@
+{% block body %}
+
+    {% set group1 = 'gr_followed' %}
+    {% set list1 =  group1|slice(3, group1|length) %}
+    {% set group2 = 'gr_otherOnes' %}
+    {% set list2 =  group2|slice(3, group2|length) %}
+
+    <form action="" method="post">
+        <div class="row form-group panel panel-heading">
+            <div class="col-md-12 text-center">
+                <h2>Gestion des liens Applications / Interlocuteurs</h2>
+            </div>
+        </div>
+
+        <div class="row form-group panel panel-body">
+
+            <table class="col-md-12">
+                <thead>
+                <tr>
+                    <th class="col-md-6 applicationsList">
+                        <div class="col-md-12 text-center">
+                            <label>Applications suivies par {{ in_charge_person.fullName }}</label>
+                        </div>
+                    </th>
+                    <th class="col-md-6 applicationsList">
+                        <div class="col-md-12 text-center">
+                            <label>Les autres applications de {{ in_charge_person.client.name }}</label>
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td class="col-md-6 applicationsList">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div id="{{ group1 }}" class="list-group">
+                                {% for application in followedApplications %}
+
+                                    <div
+                                            class="col-md-12 list-group-item btn btn-sm btn-dblclickable"
+                                            id="{{ application.id }}"
+                                            ondblclick="linkUnlink($(this).attr('id'), {{ group1 }}, {{ group2 }});"
+                                    >
+                                        {{ application.name }}
+                                        <input type="hidden" name="{{ list1 }}[]" value="{{ application.id }}">
+
+                                    </div>
+
+                                    {#<input id="{{ application.id }}" name="{{ list1 }}[]" class="col-md-12 list-group-item btn btn-sm btn-dblclickable"
+                                           ondblclick="linkUnlink($(this).attr('id'), {{ group1 }}, {{ group2 }});" readonly="readonly" value="{{ application.name }}">#}
+                                {% else %}
+                                    <div class="empty">
+                                        <div class="col-md-12 text-center msg-empty">
+                                            {{ in_charge_person.fullName }} ne suit aucune application
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </td>
+                    <td class="col-md-6 applicationsList">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div id="{{ group2 }}" class="list-group">
+                                {% for application in otherApplications %}
+
+                                    <div class="col-md-12 list-group-item btn btn-sm btn-dblclickable" id="{{ application.id }}" ondblclick="linkUnlink($(this).attr('id'), {{ group1 }}, {{ group2 }});">
+                                        {{ application.name }}
+                                        <input type="hidden" name="{{ list2 }}[]" value="{{ application.id }}">
+
+                                    </div>
+                                {% else %}
+                                    <div class="empty">
+                                        <div class="col-md-12 text-center msg-empty">
+                                            Aucune autre application n'a été définie pour le
+                                            client {{ in_charge_person.client.name }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="actions" class="row">
+            <div class="col-md-2">
+                <input id="submitLinks" type="submit" class="col-md-12 btn btn-block btn-sm btn-success"
+                       value="Enregistrer">
+            </div>
+            <div class="col-md-2">
+                <a href="{{ path('client_edit', {'id': in_charge_person.client.id}) }}" class="btn btn-block btn-sm btn-default">Retour</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}

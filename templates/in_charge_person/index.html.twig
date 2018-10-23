@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{#{% block title %}InChargePerson index{% endblock %}#}
+
+{#{% block body %}#}
+    {#<h1>InChargePerson index</h1>#}
+
+    {#<table class="table">#}
+        {#<thead>#}
+            {#<tr>#}
+                {#<th>Id</th>#}
+                {#<th>FirstName</th>#}
+                {#<th>LastName</th>#}
+                {#<th>Department</th>#}
+                {#<th>actions</th>#}
+            {#</tr>#}
+        {#</thead>#}
+        {#<tbody>#}
+        {#{% for in_charge_person in in_charge_people %}#}
+            {#<tr>#}
+                {#<td>{{ in_charge_person.id }}</td>#}
+                {#<td>{{ in_charge_person.firstName }}</td>#}
+                {#<td>{{ in_charge_person.lastName }}</td>#}
+                {#<td>{{ in_charge_person.department }}</td>#}
+                {#<td>#}
+                    {#<a href="{{ path('in_charge_person_show', {'id': in_charge_person.id}) }}">show</a>#}
+                    {#<a href="{{ path('in_charge_person_edit', {'id': in_charge_person.id}) }}">edit</a>#}
+                {#</td>#}
+            {#</tr>#}
+        {#{% else %}#}
+            {#<tr>#}
+                {#<td colspan="5">no records found</td>#}
+            {#</tr>#}
+        {#{% endfor %}#}
+        {#</tbody>#}
+    {#</table>#}
+
+    {#<a href="{{ path('in_charge_person_new') }}">Create new</a>#}
+{#{% endblock %}#}

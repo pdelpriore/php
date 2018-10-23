@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('header_deliver', {'id': header.id}) }}" onsubmit="return confirm('Merci de confirmer la livraison, ce jour, des travaux décrits dans le devis {{ header.title }}.');">
+    <input type="hidden" name="_method" value="DELIVER">
+    <input type="hidden" name="_token" value="{{ csrf_token('deliver' ~ header.id) }}">
+    <button class="btn btn-block btn-sm btn-primary">Livrer les Travaux</button>
+</form>

@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('header_reactivate', {'id': header.id}) }}" onsubmit="return confirm('Faut-il vraiment réactiver le devis {{ header.title }}.');">
+    <input type="hidden" name="_method" value="REACTIVATE">
+    <input type="hidden" name="_token" value="{{ csrf_token('reactivate' ~ header.id) }}">
+    <button class="btn btn-block btn-sm btn-warning">Réactiver</button>
+</form>

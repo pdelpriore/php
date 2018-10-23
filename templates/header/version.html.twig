@@ -1,0 +1,50 @@
+{% block body %}
+
+    <button type="button" class="btn btn-block btn-info col-md-2" data-toggle="modal"
+            data-target="#exampleModal{{ header.id }}"
+            data-whatever="@getbootstrap">Réviser
+    </button>
+
+    <div class="modal fade" id="exampleModal{{ header.id }}" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Pour confirmer la création d'une nouvelle
+                        version,
+                        merci d'indiquer le motif de la révision</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="modalRevision" action="{{ path('header_version', {'id':header.id}) }}" method="post">
+                                <div class="form-group ">
+                                    <input class="input-sm modalRevision" type="text" name="revision" value="">
+                                </div>
+                                <div class="row col-md-4">
+                                    <input type="submit" class="col-md-2 btn btn-block btn-sm btn-success"
+                                           value="Confirmer">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            {#<a href="{{ path('header_version', {'id':header.id}) }}" type="submit"#}
+                            {#class="col-md-2 btn btn-block btn-sm btn-success">Confirmer</a>#}
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-block btn-sm btn-default" data-dismiss="modal">
+                                Retour
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

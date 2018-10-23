@@ -1,0 +1,5 @@
+{#<form method="post" action="{{ path('detail_delete', {'id': detail.id}) }}" onsubmit="return confirm('Merci de confirmer la suppression de la ligne : {{ detail.description }}');">#}
+    {#<input type="hidden" name="_method" value="DELETE">#}
+    {#<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ detail.id) }}">#}
+    {#<button class="btn btn-block btn-sm btn-danger ">Supprimer</button>#}
+{#</form>#}

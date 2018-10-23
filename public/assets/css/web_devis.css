@@ -1,0 +1,547 @@
+@font-face {
+    font-family: 'Charte';
+    src:url(../fonts/DIN-Regular.ttf);
+}
+
+* {
+    font-family: Charte;
+    font-size: 12px;
+    color: #3a5269;
+}
+
+body, .container, .panel {
+    background-color: #eeece1;
+}
+
+.navbar-default {
+    background-color: #dddbcf;
+  }
+
+.navbar-brand {
+    margin-top: -5px;
+}
+
+.embeddedForm {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.embeddedForm>div {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#estimate {
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0);
+    margin-bottom: 20px;
+}
+
+.btn-sm {
+    font-size: 14px;
+}
+
+.label {
+    padding-top: 5px;
+    font-family: DIN-Regular;
+    font-size: 12px;
+    text-align: left;
+}
+
+/*h1, h2, h3, .showHeader1, .showHeader2, .showHeader3 {*/
+h1, h2, h3, .showHeader1 {
+    font-weight: bold;
+}
+
+.showHeader1, .showHeader2 {
+    padding: 5px;
+    margin-bottom: 3px;
+}
+
+.showHeader3 {
+    padding-left: 5px;
+    padding-top: 3px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+}
+
+h1 {
+    font-size: 20px;
+}
+
+.showHeader1 {
+    color: #3a5269;
+    font-size: 24px;
+}
+
+h2, .span {
+    font-size: 16px;
+}
+
+.showHeader2 {
+    font-size: 18px;
+}
+
+h3, .showHeader3 {
+    font-size: 16px;
+}
+
+.showHeader1, .subTotal, .showFooter {
+    background-color: #e1e4e9;
+}
+
+.showHeader2, .showHeader3, .grandTotal {
+    background-color: #3a5269;
+}
+
+.contentHeader2, .contentHeader3, .grandTotal {
+    color: white;
+    font-size: 18px;
+}
+
+.contentHeader2 {
+    padding: 0;
+}
+
+.showLi div {
+    padding: 0;
+}
+
+.showLi {
+    height: 28px;
+    font-size: 16px;
+    color: #3a5269;
+}
+
+.everLine {
+    background-color: #dddbcf;
+}
+
+.oddLine {
+    background-color: white;
+}
+
+.totalLine {
+    padding-left: 0;
+}
+
+.subTotal, .subTotalTitle, .grandTotal, .grandTotalTitle {
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.subTotal, .subTotalTitle {
+    font-style: italic;
+}
+
+.subTotalTitle, .grandTotalTitle {
+    padding: 0;
+    color: #3a5269;
+}
+
+.totalLineMargin {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding-top: 2px;
+}
+
+.totalStyle {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.totalDays, .totalPrice {
+    padding: 0;
+    color: #3a5269;
+}
+
+.grandTotalDays, .grandTotalPrice {
+    padding: 0;
+    color: white;
+}
+
+.showFooter {
+    padding: 5px 0 5px 0;
+    margin-top: 10px;
+    font-size: 18px;
+    font-style: italic;
+    color: red;
+}
+
+.btn {
+    color: #fcf8e3;
+    font-weight: bold;
+}
+
+.btn-default {
+    color: #333333;
+    font-weight: bold;
+}
+
+.btn-grey {
+    background-color: #A0A0A0;
+}
+
+.btn-grey:hover {
+    background-color: #808080;
+}
+
+.msg-empty {
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+}
+
+li {
+    list-style-type: none;
+}
+
+.entete {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.actGrp {
+    font-size: 1em;
+    height: 2em;
+    padding-top: 0.5em;
+    margin-bottom: .5em;
+}
+
+.showPrice::after, .showDaylyCost::after {
+    content:" €";
+}
+
+#globalShowTotal {
+    font-size: 1.6em;
+    text-decoration: underline;
+}
+
+a.glyphicon {
+    text-decoration: none;
+}
+
+.glyphicon-plus {
+    color: green;
+    margin-top: 0.5em;
+}
+
+.glyphicon-minus {
+    color: darkred;
+    margin-top: 0.7em;
+}
+
+.glyphicon-user {
+    margin-top: 0.7em;
+}
+
+.glyphicon-eye-open {
+    margin-top: 0.7em;
+}
+
+a.dropdown-toggle {
+    font-size: 14px;
+}
+
+.input_money {
+    display: inline-block;
+    width: calc(100% - 20px);
+}
+
+.rightAlign {
+    text-align: right;
+}
+
+.centerAlign {
+    text-align: center;
+}
+
+.dropdown-toggle {
+    font-weight: bold;
+}
+
+.list-group {
+    margin-bottom: 0;
+}
+
+.applicationsList {
+    vertical-align: top;
+}
+
+.btn-dblclickable {
+    font-size: 12px;
+    font-weight: normal;
+    text-align: justify;
+    color: #3a5269;
+}
+
+.navBold {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.logoForm {
+    max-height: 60px;
+    position: absolute;
+}
+
+.logoIndex {
+    max-height: 20px;
+}
+
+input[type="file"] {
+    width: 110px;
+}
+
+.errors, .errors>input {
+    background-color: #F2DEDE;
+    color: #a94442;
+}
+
+label.required:before {
+    content: "* ";
+}
+
+label.required {
+    color: #a94442;
+}
+
+.tabs {
+    background-color: #ccc;
+    color: #fff;
+}
+
+a.tabs:hover {
+    background-color: #ccc;
+    color: #999;
+}
+
+#estimatePDF {
+    height: 100vh;
+    font-family: Charte;
+    background: white;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.pdfTitle {
+    color: white;
+    background-color: #34526d;
+    width: 100%;
+    text-align: center;
+    /*font-size: 3em;*/
+    font-size: 32px;
+}
+
+.titleDesc {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.pdfTitle2 {
+    color: white;
+    background-color: #3A5269;
+}
+
+.pdfTitle3 {
+    font-weight: bold;
+}
+
+.pdfLogo {
+    width: 220px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.pdfTableBorderLess,
+.pdfTableBorderLess > tr,
+.pdfTableBorderLess > th,
+.pdfTableBorderLess > td {
+    border: 0 none !important;
+}
+
+.imgPdf {
+    display: block;
+    width: 100%;
+}
+
+.imgPdfFooter {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.tablesPdf {
+    position: absolute;
+    top: auto;
+    bottom: auto;
+}
+
+.index1 {
+    color: grey;
+}
+
+.index2 {
+}
+
+.index3 {
+    color: red;
+    text-decoration: line-through;
+}
+
+.index4 {
+    font-weight: bold;
+}
+
+.index5 {
+    color: green;
+    font-weight: bold;
+}
+
+.index6 {
+    color: orange;
+    text-decoration: line-through;
+}
+
+.index7 {
+    color: darkgreen;
+    font-weight: bold;
+}
+
+.index8 {
+    background-color: green;
+    color: white;
+}
+
+form.modalRevision, .modalRevision {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.c2 {
+    padding: 5px;
+    position: absolute;
+    width: 150px;
+    height: 85px;
+    background-color: #DDDBCF;
+    color: black;
+    text-align: left;
+    font-size: 13px;
+    border: 1px solid black;
+    border-radius: 3px;
+
+}
+
+.c3 {
+    padding: 5px;
+    position: absolute;
+    width: 100px;
+    height: 65px;
+    background-color: #DDDBCF;
+    color: black;
+    text-align: left;
+    font-size: 13px;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.c4 {
+    padding: 5px;
+    position: absolute;
+    width: 100px;
+    height: 105px;
+    background-color: #DDDBCF;
+    color: black;
+    text-align: left;
+    font-size: 13px;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.c5 {
+    padding: 5px;
+    position: absolute;
+    width: 150px;
+    height: 65px;
+    background-color: #DDDBCF;
+    color: black;
+    text-align: left;
+    font-size: 13px;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.c6 {
+    padding: 5px;
+    position: absolute;
+    width: 100px;
+    height: 45px;
+    background-color: #DDDBCF;
+    color: black;
+    text-align: left;
+    font-size: 13px;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.c7 {
+    padding: 5px;
+    position: absolute;
+    width: 150px;
+    height: 45px;
+    background-color: #DDDBCF;
+    color: black;
+    text-align: left;
+    font-size: 13px;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.c8 {
+    padding: 5px;
+    position: absolute;
+    width: 90px;
+    height: 45px;
+    background-color: #DDDBCF;
+    color: black;
+    text-align: left;
+    font-size: 13px;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.aContext:hover {
+    cursor: pointer;
+    margin-top: 5px;
+    text-decoration: none;
+}
+
+.menuContextuel {
+    position: absolute;
+    background-color: #DDDBCF;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.dropdown-submenu{position:relative;}
+.dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
+.dropdown-submenu:hover>.dropdown-menu{display:block;}
+.dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
+.dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
+.dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
+
+.undeletable {}
+
+.erased {
+    display: none;
+}
+
+.divContextuel {
+    margin: 5px;
+}
+
+

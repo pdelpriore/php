@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('header_bill', {'id': header.id}) }}" onsubmit="return confirm('Merci de confirmer la facturation à {{ header.application.client.name }}, ce jour, des travaux décrits dans le devis {{ header.title }}.');">
+    <input type="hidden" name="_method" value="BILL">
+    <input type="hidden" name="_token" value="{{ csrf_token('bill' ~ header.id) }}">
+    <button class="btn btn-block btn-sm btn-primary">Envoyer la Facture</button>
+</form>

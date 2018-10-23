@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ titleConfiguration }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <div class="row col-md-12 text-center panel">
+        <h2>Nouveau niveau de certitude</h2>
+    </div>
+
+    <div class="row col-md-12 form-group">
+    {{ include('certainty_level/_form.html.twig') }}
+
+        <div class="col-md-3 col-md-2">
+            <a href="{{ path('certainty_level_index') }}" class="btn btn-block btn-sm btn-default">Retour</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ titleClient }}{% endblock %}
+
+{% block body %}
+    <div class="container panel-group">
+        <div class="row col-md-12panel panel-heading">
+            <div class="row col-md-12 text-center">
+                <h2 class="">{{ titleClient }}</h2>
+            </div>
+            <div class="row col-md-2">
+                <a href="{{ path('client_new') }}" class="btn btn-block btn-sm btn-success">Ajouter un client</a>
+            </div>
+        </div>
+        <div class="row col-md-12 panel panel-body">
+            <table id="headerList" class="table table-striped table-hover table-condensed">
+                <thead>
+                <tr>
+                    <th class="centerAlign">Nom</th>
+                    <th class="centerAlign">Alias</th>
+                    <th class="centerAlign">Logo</th>
+                    <th class="centerAlign">Tarif journalier spécifique</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for client in clients %}
+                    <tr>
+                        <td class="col-md-4"><a
+                                    href="{{ path('client_edit', {'id': client.id}) }}">{{ client.name }}</a></td>
+                        <td class="col-md-1 centerAlign"><a
+                                    href="{{ path('client_edit', {'id': client.id}) }}">{{ client.alias }}</a></td>
+
+                        <td class="col-md-2 centerAlign">
+                            {% if client.logo is not empty %}
+                            <a href="{{ path('client_edit', {'id': client.id}) }}">
+                                <img class="logoIndex" src="{{ asset('images/logos/' ~ client.logo) }}">
+                            </a>
+                            {% endif %}
+                        </td>
+
+                        <td class="col-md-3 totalPrice rightAlign"><a
+                                    href="{{ path('client_edit', {'id': client.id}) }}">{% if client.daylyCost != 0 %}{{ client.daylyCost|number_format(2, ',', '.') }} €{% else %}{% endif %}</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">Aucun client défini</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

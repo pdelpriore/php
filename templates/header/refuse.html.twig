@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('header_refuse', {'id': header.id}) }}" onsubmit="return confirm('Merci de confirmer le refus du devis {{ header.title }} par le client {{ header.application.client.name }}.');">
+    <input type="hidden" name="_method" value="REFUSE">
+    <input type="hidden" name="_token" value="{{ csrf_token('refuse' ~ header.id) }}">
+    <button class="btn btn-block btn-sm btn-danger">Refuser le Devis</button>
+</form>

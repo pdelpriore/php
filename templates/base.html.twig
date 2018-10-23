@@ -1,0 +1,98 @@
+{% set title = "Suivi des Devis" %}
+{% set titleEstimateIndex = "Liste des devis" %}
+{% set titleClient = "Définition des clients" %}
+{% set titleCyllenePerson = "Chiffreurs" %}
+{% set titleHeader = title %}
+{% set titleHeaderShow = title %}
+{% set titleConfiguration = "Configuration" %}
+{% set titleAbacus = "Données d'abaques" %}
+{% set titleActivityGroup = "Activités prédéfinies" %}
+{% set titleBilling = "Types de facturation" %}
+{% set titleCertaintyLevel = "Niveaux de certitude" %}
+{% set titleParameter = "Paramétrage applicatif" %}
+{% set titleGlobal = "Variables globales" %}
+{% set titleStep = "Etapes" %}
+{% set titleProfil = "Profils" %}
+{% set statusName = ['', 'En création', 'Non envoyé', 'Supprimé', 'Envoyé', 'Accepté', 'Refusé', 'Livré', 'Facturé'] %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="{{ asset('css/web_devis.css') }}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    {% endblock %}
+</head>
+<body>
+{% block header %}
+    <nav class="navbar navbar-default">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                <img src="{{ asset('images/favicon-32x32.png') }}" alt="Accueil" title="Retour à l'accueil">
+            </a>
+        </div>
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="navBold"><a href="/" title="Saisie et suivi des Devis" class="navBold">{{ titleEstimateIndex }}</a></li>
+                    <li class="navBold"><a href="{{ path('client_index') }}" title="Mise à jour des clients, applications et interlocuteurs" class="navBold">{{ titleClient }}</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="Mise à jour des données de référence">{{ titleConfiguration }}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#" title="Abaques">{{ titleAbacus }}</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('activity_group_index') }}">{{ titleActivityGroup }}</a></li>
+                                    <li><a href="{{ path('profil_index') }}">{{ titleProfil }}</a></li>
+                                    <li><a href="{{ path('certainty_level_index') }}">{{ titleCertaintyLevel }}</a></li>
+                                    <li><a href="{{ path('billing_index') }}">{{ titleBilling }}</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#" title="Listes de référence">{{ titleParameter }}</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('cyllene_person_index') }}">{{ titleCyllenePerson }}</a></li>
+                                    <li><a href="{{ path('parameter_index') }}">{{ titleGlobal }}</a></li>
+                                    <li><a href="{{ path('step_index') }}">{{ titleStep }}</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block body %}{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/jquery/3.3.1/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('js/html2canvas.min.js') }}"></script>
+    <script src="{{ asset('js/web_devis.js') }}"></script>
+    <script type="text/javascript">
+        let routes = {
+            header_send : "{{ path('header_send', {'id': '_id_'})|escape('js') }}",
+            header_delete : "{{ path('header_delete', {'id': '_id_'})|escape('js') }}",
+            header_show : "{{ path('header_show', {'id': '_id_'})|escape('js') }}",
+            header_reactivate : "{{ path('header_reactivate', {'id': '_id_'})|escape('js') }}",
+            header_accept : "{{ path('header_accept', {'id': '_id_'})|escape('js') }}",
+            header_refuse : "{{ path('header_refuse', {'id': '_id_'})|escape('js') }}",
+            header_version : "{{ path('header_version', {'id': '_id_'})|escape('js') }}",
+            header_deliver : "{{ path('header_deliver', {'id': '_id_'})|escape('js') }}",
+            header_bill : "{{ path('header_bill', {'id': '_id_'})|escape('js') }}",
+            header_step4 : "{{ path('header_step4', {'id': '_id_'})|escape('js') }}",
+        };
+    </script>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+</body>
+</html>

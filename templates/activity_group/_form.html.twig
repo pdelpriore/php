@@ -1,0 +1,91 @@
+{{ form_start(form) }}
+
+<div class="row form-group panel panel-heading">
+    <div class="row col-md-12">
+        <div  class="row col-md-1 label">
+            {{ form_label(form.name) }}
+        </div>
+        <div>
+            {{ form_errors(form.name) }}
+            {{ form_help(form.name) }}
+            {{ form_widget(form.name) }}
+        </div>
+        <div  class="col-md-1 label rightAlign">
+            {{ form_label(form.rate) }}
+        </div>
+        <div>
+            {{ form_errors(form.rate) }}
+            {{ form_help(form.rate) }}
+            {{ form_widget(form.rate) }}
+        </div>
+        <div  class="col-md-1 label rightAlign">
+            {{ form_label(form.serial_number) }}
+        </div>
+        <div>
+            {{ form_errors(form.serial_number) }}
+            {{ form_help(form.serial_number) }}
+            {{ form_widget(form.serial_number) }}
+        </div>
+        <div  class="col-md-1 label rightAlign">
+            {{ form_label(form.automatic) }}
+        </div>
+        <div>
+            {{ form_errors(form.automatic) }}
+            {{ form_help(form.automatic) }}
+            {{ form_widget(form.automatic) }}
+        </div>
+        <div  class="col-md-1 label rightAlign" {{ nonDisplay ? 'style="display: none;"'}}>
+            {{ form_label(form.referent) }}
+        </div>
+        <div {{ nonDisplay ? 'hidden'}}>
+            {{ form_errors(form.referent) }}
+            {{ form_help(form.referent) }}
+            {{ form_widget(form.referent) }}
+        </div>
+    </div>
+</div>
+
+<div class="row form-group panel panel-body">
+    <div class = "row">
+        <ul  id="2" class="row collapse in entete">
+            <li class="row entete col-md-12 undeletable">
+                <div>
+                    <div class="badge actGrp col-md-2">Liste des activités</div>
+                    <div id="addR" class="col-md-1 glyphicon glyphicon-plus" onclick="addNewLine()"></div>
+                </div>
+            </li>
+            <li class="row entete col-md-12 undeletable">
+                <div class="col-md-1">Ordre</div>
+                <div class="col-md-3">Activité</div>
+                <div class="col-md-3">Profil</div>
+                <div class="col-md-1">Proportion</div>
+                <div class="col-md-2">Tranche horaire</div>
+            </li>
+        </ul>
+        <ul  id="2" class="row collapse in embeddedForm" data-prototype="{{ form_widget(form.activities.vars.prototype)|e() }}">
+            {% set index = 0 %}
+            {% for activity in form.activities %}
+                {% set index = index + 1 %}
+                <li id="{{ index }}" class="row">
+                    <div>{{ form_row(activity.serialNumber, {'label' : false}) }}</div>
+                    <div>{{ form_row(activity.name, {'label' : false}) }}</div>
+                    <div>{{ form_row(activity.profil, {'label' : false}) }}</div>
+                    <div>{{ form_row(activity.rate, {'label' : false}) }}</div>
+                    <div>{{ form_row(activity.minHours, {'label' : false}) }}</div>
+                </li>
+            {% else %}
+                <li class="empty col-md-12 undeletable">
+                    <div class="text-center msg-empty">
+                        Aucune activité n'a été définie
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div id="actions" class="row">
+    <div  class="col-md-2">
+        <button type="submit" class="btn  btn-block btn-sm btn-success">Enregistrer</button>
+    </div>
+    {{ form_errors(form) }}
+{{ form_end(form) }}

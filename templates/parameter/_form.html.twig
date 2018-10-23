@@ -1,0 +1,29 @@
+{{ form_start(form) }}
+
+<div class="row form-group panel panel-heading">
+    <div class="row col-md-12">
+        <div  class="row col-md-1 label rightAlign">
+            {{ form_label(form.paramKey) }}
+        </div>
+        <div  class="col-md-2">
+            {{ form_errors(form.paramKey) }}
+            {{ form_help(form.paramKey) }}
+            {{ form_widget(form.paramKey) }}
+        </div>
+        <div  class="col-md-1 label rightAlign">
+            {{ form_label(form.paramValue) }}
+        </div>
+        <div  class="col-md-8">
+            {{ form_errors(form.paramValue) }}
+            {{ form_help(form.paramValue) }}
+            {{ form_widget(form.paramValue) }}
+        </div>
+    </div>
+</div>
+<div id="actions" class="row">
+
+    <div  class="col-md-2">
+        <button type="submit" class="btn  btn-block btn-sm btn-success">Enregistrer</button>
+    </div>
+    {{ form_errors(form) }}
+    {{ form_end(form) }}

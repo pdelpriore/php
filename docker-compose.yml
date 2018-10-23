@@ -1,0 +1,34 @@
+###############################################################################
+#                               PeterAuto Corpo                               #
+###############################################################################
+version: '2'
+services:
+  web:
+    build: ./docker/php
+    container_name: sf-web-devis-apache-72
+    expose:
+      - 8080
+    environment:
+      - VIRTUAL_HOST=loc.devis-web.softwarefactory.cetsi.fr
+    links:
+      - mysql
+    volumes:
+      - ./:/var/www/application/htdocs
+      - ../logs:/var/www/application/logs
+      - ../config/vhosts:/etc/apache2/sites-enabled
+    network_mode: network_loc
+  mysql:
+    image: bitnami/mariadb:latest
+    container_name: sf-web-devis-mysql
+    volumes:
+      - ./docker/db:/docker-entrypoint-initdb.d
+    #  - ./docker/db:/var/lib/mysql
+    environment:
+      - MARIADB_ROOT_PASSWORD=root
+      - MARIADB_DATABASE=${MYSQL_BDD}
+      - MARIADB_USER=${MYSQL_USER}
+      - MARIADB_PASSWORD=${MYSQL_PASS}
+      - MARIADB_ROOT_HOST=%var/lb/
+    expose:
+        - 80
+    network_mode: network_loc

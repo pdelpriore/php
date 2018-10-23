@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{#{% block body %}#}
+    {#<div class="container panel-group">#}
+        {#<div class="row col-md-12panel panel-heading">#}
+            {#<div class="row col-md-12 text-center">#}
+                {#<h2 class="">Liste des Activités</h2>#}
+            {#</div>#}
+            {#<div class="row col-md-2">#}
+                    {#<a href="{{ path('activity_new') }}" class="btn btn-block btn-sm btn-success">Ajouter une activité</a>#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="row col-md-12 panel panel-body">#}
+            {#<table id = "headerList" class="table table-striped table-hover table-condensed">#}
+                {#<thead>#}
+                {#<tr>#}
+                    {#<th>N° Groupe</th>#}
+                    {#<th>Groupe</th>#}
+                    {#<th>Ordre</th>#}
+                    {#<th>Activité</th>#}
+                    {#<th>Part /groupe</th>#}
+                    {#<th>Profil</th>#}
+                {#</tr>#}
+                {#</thead>#}
+                {#<tbody>#}
+                    {#{% for activity in activities%}#}
+                    {#<tr>#}
+                        {#<td><a href="{{ path('activity_edit', {'id': activity.id}) }}">{{ activity.activityGroup.serialNumber}}</a></td>#}
+                        {#<td><a href="{{ path('activity_edit', {'id': activity.id}) }}">{{ activity.activityGroup.name}}</a></td>#}
+                        {#<td><a href="{{ path('activity_edit', {'id': activity.id}) }}">{{ activity.serialNumber}}</a></td>#}
+                        {#<td><a href="{{ path('activity_edit', {'id': activity.id}) }}">{{ activity.name}}</a></td>#}
+                        {#<td><a href="{{ path('activity_edit', {'id': activity.id}) }}">{{ activity.rate}}</a></td>#}
+                        {#<td><a href="{{ path('activity_edit', {'id': activity.id}) }}">{{ activity.profil.name}}</a></td>#}
+                    {#</tr>#}
+                {#{% else %}#}
+                    {#<tr>#}
+                        {#<td colspan="4">Aucune activité définie</td>#}
+                    {#</tr>#}
+                {#{% endfor %}#}
+                {#</tbody>#}
+            {#</table>#}
+        {#</div>#}
+    {#</div>#}
+{#{% endblock %}#}

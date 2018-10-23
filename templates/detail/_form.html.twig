@@ -1,0 +1,36 @@
+{#{{ form_start(form) }}#}
+
+{#<div class="row col-md-12 form-group">#}
+    {#<div  class="col-md-1">#}
+        {#{{ form_label(form.description, 'Détail') }}#}
+    {#</div>#}
+    {#<div  class="col-md-11">#}
+        {#{{ form_errors(form.description, {'attr': {'class': 'form-control'}}) }}#}
+        {#{{ form_help(form.description, {'attr': {'class': 'form-control'}}) }}#}
+        {#{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}#}
+    {#</div>#}
+{#</div>#}
+{#<div class="row col-md-12 form-group">#}
+    {#<div  class="col-md-1">#}
+        {#{{ form_label(form.estimated_days, 'Nb jours') }}#}
+    {#</div>#}
+    {#<div  class="col-md-1">#}
+        {#{{ form_errors(form.estimated_days, {'attr': {'class': 'form-control'}}) }}#}
+        {#{{ form_help(form.estimated_days, {'attr': {'class': 'form-control'}}) }}#}
+        {#{{ form_widget(form.estimated_days, {'attr': {'class': 'form-control'}}) }}#}
+    {#</div>#}
+    {#<div  class="col-md-1 col-md-push-1">#}
+        {#{{ form_label(form.header, 'Devis') }}#}
+    {#</div>#}
+    {#<div  class="col-md-8 col-md-push-1">#}
+        {#{{ form_errors(form.header, {'attr': {'class': 'form-control'}}) }}#}
+        {#{{ form_help(form.header, {'attr': {'class': 'form-control'}}) }}#}
+        {#{{ form_widget(form.header, {'attr': {'class': 'form-control'}}) }}#}
+    {#</div>#}
+{#</div>#}
+{#<div class="row col-md-6 form-group">#}
+    {#<div  class="col-md-3 col-md-offset-2">#}
+        {#<button class="btn btn-block btn-sm btn-success ">{{ button_label|default('Enregistrer') }}</button>#}
+    {#</div>#}
+
+{#{{ form_end(form) }}#}

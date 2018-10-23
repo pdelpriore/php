@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('cyllene_person_delete', {'id': cyllene_person.id}) }}" onsubmit="return confirm('Merci de confirmer la suppression du chiffreur {{ cyllene_person.name }}.');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cyllene_person.id) }}">
+    <button class="btn btn-block btn-sm btn-danger">Supprimer</button>
+</form>

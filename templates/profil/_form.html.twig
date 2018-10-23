@@ -1,0 +1,37 @@
+{{ form_start(form) }}
+
+<div class="row form-group panel panel-heading">
+    <div class="row">
+        <div class="col-md-1 label">
+            {{ form_label(form.name) }}
+        </div>
+        <div>
+            {{ form_errors(form.name) }}
+            {{ form_help(form.name) }}
+            {{ form_widget(form.name) }}
+        </div>
+        <div  class="col-md-1 col-md-offset-1 label rightAlign">
+            {{ form_label(form.dayly_cost) }}
+        </div>
+        <div>
+            {{ form_errors(form.dayly_cost) }}
+            {{ form_help(form.dayly_cost) }}
+            {{ form_widget(form.dayly_cost) }}
+        </div>
+        <div  class="col-md-1 col-md-offset-1 label rightAlign" {{ nonDisplay ? 'style="display:none"' }}>
+            {{ form_label(form.default_selected) }}
+        </div>
+        <div {{ nonDisplay ? 'hidden' }}>
+            {{ form_errors(form.default_selected) }}
+            {{ form_help(form.default_selected) }}
+            {{ form_widget(form.default_selected) }}
+        </div>
+    </div>
+</div>
+<div id="actions" class="row">
+    <div  class="col-md-2">
+        <button type="submit" class="btn  btn-block btn-sm btn-success">Enregistrer</button>
+    </div>
+
+{{ form_errors(form) }}
+{{ form_end(form) }}

@@ -1,0 +1,199 @@
+{{ form_start(form) }}
+
+{% set disabled = (status >= 3) ? true : false  %}
+{% set erased = (status == 3) ? true : false %}
+{% set accepted = (status == 5) ? true : false %}
+
+{#Header#}
+<div class="row form-group" disabled="disabled">
+    <div class="row">
+        <div class="col-md-1 label">
+            {{ form_label(form.cyllenePerson) }}
+        </div>
+        <div>
+            {{ form_errors(form.cyllenePerson) }}
+            {{ form_help(form.cyllenePerson) }}
+            {{  disabled ? form_widget(form.cyllenePerson, {'disabled' : 'disabled'}) : form_widget(form.cyllenePerson) }}
+        </div>
+        <div class="col-md-1 col-md-offset-1 label">
+            {{ form_label(form.billing) }}
+        </div>
+        <div>
+            {{ form_errors(form.billing) }}
+            {{ form_help(form.billing) }}
+            {{  disabled ? form_widget(form.billing, {'disabled' : 'disabled'}) : form_widget(form.billing) }}
+        </div>
+        <div class="col-md-1 col-md-offset-2 label">
+            {{ form_label(form.billNumber) }}
+        </div>
+        <div>
+            {{ form_errors(form.billNumber) }}
+            {{ form_help(form.billNumber) }}
+            {{  erased ? form_widget(form.billNumber, {'disabled': 'disabled'}) : form_widget(form.billNumber) }}
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-1 label">
+            {{ form_label(form.application) }}
+        </div>
+        <div>
+            {{ form_errors(form.application) }}
+            {{ form_help(form.application) }}
+            {{  disabled ? form_widget(form.application, {'disabled' : 'disabled'}) : form_widget(form.application) }}
+        </div>
+        <div class="col-md-1 col-md-offset-1 label">
+            {{ form_label(form.application_version) }}
+        </div>
+        <div>
+            {{ form_errors(form.application_version) }}
+            {{ form_help(form.application_version) }}
+            {{  disabled ? form_widget(form.application_version, {'disabled' : 'disabled'}) : form_widget(form.application_version) }}
+        </div>
+        <div class="col-md-1 col-md-offset-2
+         label">
+            {{ form_label(form.inChargePerson) }}
+        </div>
+        <div>
+            {{ form_errors(form.inChargePerson) }}
+            {{ form_help(form.inChargePerson) }}
+            {{  disabled ? form_widget(form.inChargePerson, {'disabled' : 'disabled'}) : form_widget(form.inChargePerson) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 label">
+            {{ form_label(form.description) }}
+        </div>
+        <div>
+            {{ form_errors(form.description) }}
+            {{ form_help(form.description) }}
+            {% if accepted %}
+                {{ form_widget(form.description, {'attr': {'readonly': 'readonly'}}) }}
+            {% else %}
+                {{ form_widget(form.description) }}
+            {% endif %}
+        </div>
+    </div>
+    <div id="globalShowTotal" class="row col-md-5 col-md-offset-7">
+        {#Affichage du total du devis#}
+    </div>
+
+</div>
+
+{#Détail#}
+<div class="row ">
+    <ul class="row embeddedForm" data-prototype="{{ form_widget(form.details.vars.prototype)|e() }}">
+        <li class="row col-md-12 undeletable">
+            <!--<div>{{ form_errors(form, {'attr': {'class': 'alert alert-danger'}}) }}</div>-->
+        </li>
+        <div class="row">
+            <li class="row undeletable entete">
+                <div class="col-md-1 col-md-offset-1 centerAlign">#RD</div>
+                <div class="col-md-4">Tâche</div>
+                <div class="col-md-1">Estim. (J)</div>
+                <div class="col-md-2">Profil</div>
+                <div class="col-md-2">Certitude</div>
+            </li>
+        </div>
+        {% set total = 0 %}
+        {% set prix = 0 %}
+        {% for group in groups|sort %}
+
+            {% set groupId = null %}
+            {% set groupName = null %}
+            {% set groupAutomatic = null %}
+            {% set groupReferent = null %}
+            {% set profilDefault = profilDefault %}
+            {% for groupGlobal in groupsGlobal %}
+                {% if groupGlobal.getSerialNumber == group %}
+                    {% set groupId = groupGlobal.getId %}
+                    {% set groupName = groupGlobal.getName %}
+                    {% set groupAutomatic = groupGlobal.getAutomatic %}
+                    {% set groupReferent = groupGlobal.getReferent %}
+                {% endif %}
+            {% endfor %}
+
+            {% set groupTarget = groupName|replace({' ': '_'}) %}
+            {% set groupTotal = 'total' ~ groupTarget %}
+            {% set groupShowTotal = 'show' ~ groupTotal %}
+            <div>
+                <li class="row undeletable">
+                    <div class="badge actGrp col-md-2" data-toggle="collapse"
+                         data-target="#{{ groupTarget }}">{{ groupName }}</div>
+                    {% if not disabled %}
+                    <div class="col-md-1 glyphicon glyphicon-plus"
+                         onclick="addNewLine('{{ groupTarget }}', '{{ groupId }}', '{{ profilDefault }}', '{{ certaintyLevelDefault }}')">
+                    </div>
+                    {% endif %}
+                </li>
+            </div>
+            <div id="{{ groupTarget }}"
+                 class="collapse {% if not groupAutomatic %}in{% endif %} {% if groupAutomatic %}isAutomatic{% endif %} {% if groupReferent %}isReferent{% endif %}">
+                {% set subtotal = 0 %}
+                {% set subprix = 0 %}
+
+                {% for detail in form.details %}
+                    {% set rdNumber = detail.vars.value.getRdNumber %}
+                    {% set dailyCost = detail.vars.value.profil is not null ? detail.vars.value.profil.getDaylyCost: 0 %}
+                    {% if detail.vars.value.activityGroup.getSerialNumber == group %}
+                        <li class="detail row {{ disabled ? 'undeletable' : '' }}">
+                            <div class="detail">{{ form_row(detail.activityGroup) }}
+                            </div>
+                            <div class="detail">
+                                {% if groupReferent %}
+                                    {% if rdNumber > 0 %}
+                                        <a class="col-md-1 rightAlign  glyphicon glyphicon-eye-open" href="{{ taskLine ~ rdNumber }}" target="_blank" title="Visualiser le ticket {{ rdNumber }}"></a>
+                                        {{ form_row(detail.automatic, {'attr': {'style': 'display: none;'}}) }}
+                                    {% else %}
+                                        <div class="col-md-1">
+                                            {{ form_row(detail.automatic, {'attr': {'style': 'display: none;'}}) }}
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    {{ disabled ? form_row(detail.automatic, {'disabled' : 'disabled'}) : form_row(detail.automatic) }}
+                                {% endif %}
+                            </div>
+                            <div class="detail">
+                                {{ disabled ? form_row(detail.rd_number, {'disabled' : 'disabled'}) : form_row(detail.rd_number) }}
+                            </div>
+                            <div class="detail">{{ disabled ? form_row(detail.description, {'disabled' : 'disabled'}) : form_row(detail.description) }}</div>
+                            <div class="detail">{{ disabled ? form_row(detail.estimated_days, {'disabled' : 'disabled'}) : form_row(detail.estimated_days) }}</div>
+                            <div class="detail {{ disabled ? 'disabled' : 'undisabled'}}">{{ form_row(detail.profil) }}</div>
+                            <div class="detail {{ disabled ? 'disabled' : 'undisabled'}}">{{ form_row(detail.certaintyLevel) }}</div>
+
+                            {% set subtotal = subtotal + detail.vars.value.calculatedDays %}
+                            {% set subprix = subprix + detail.vars.value.price %}
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <li id="" class="empty col-md-12 undeletable">
+                        <div class="text-center msg-empty">Aucune ligne na été saisie</div>
+                    </li>
+                {% endfor %}
+                {% set total = total + subtotal %}
+                {% set prix = prix + subprix %}
+                <div id="{{ groupTotal }}" class="groupTotal">
+                </div>
+            </div>
+        {% endfor %}
+
+        <div id="globalTotal">
+            <div class="input-sm col-md-5">
+                <div class="col-md-12 rightAlign">Total Devis</div>
+            </div>
+            <div class="col-md-5 totalStyle">
+                <div class="input-sm col-md-5 totalDays rightAlign">{{ total|number_format(2, ',', ' ') }} J</div>
+                <div class="input-sm col-md-7 totalPrice rightAlign">{{ prix|number_format(2, ',', ' ') }}
+                    €
+                </div>
+            </div>
+        </div>
+    </ul>
+
+    {{ form_errors(form) }}
+
+    <div id="actions" class="row col-10">
+            <div class="col-md-2 {{ erased ? 'erased' : '' }}">
+                <button type="submit" class="btn  btn-block btn-sm btn-success">Enregistrer</button>
+            </div>
+{{ form_end(form) }}

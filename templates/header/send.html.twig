@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('header_send', {'id': header.id}) }}" onsubmit="return confirm('Merci de confirmer l\'envoi du devis {{ header.title }} à {{ header.application.client.name }}, ce jour.');">
+    <input type="hidden" name="_method" value="SEND">
+    <input type="hidden" name="_token" value="{{ csrf_token('send' ~ header.id) }}">
+    <button class="btn btn-block btn-sm btn-primary">Envoyer Devis</button>
+</form>
